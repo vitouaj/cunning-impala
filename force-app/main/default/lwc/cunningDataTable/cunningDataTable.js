@@ -6,8 +6,6 @@ import lookupTemplate from "./lookupTemplate.html";
 import { api } from "lwc";
 
 export default class CunningDataTable extends LightningDataTable {
-  @api lookupChange;
-
   static customTypes = {
     picture: {
       template: pictureTemplate,

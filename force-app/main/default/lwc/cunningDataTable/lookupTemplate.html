@@ -1,14 +1,9 @@
 <template>
-  <lightning-record-edit-form
-    class={typeAttributes.class}
-    record-id={typeAttributes.objectRecordId}
+  <c-cunning-lookup
+    class-name={typeAttributes.class}
+    variant={typeAttributes.variant}
+    field-api-name={typeAttributes.fieldApiName}
     object-api-name={typeAttributes.objectApiName}
-  >
-    <lightning-input-field
-      variant={typeAttributes.variant}
-      field-name={typeAttributes.fieldApiName}
-      onchange={lookupChange}
-    >
-    </lightning-input-field>
-  </lightning-record-edit-form>
+    object-record-id={typeAttributes.objectRecordId}
+  ></c-cunning-lookup>
 </template>

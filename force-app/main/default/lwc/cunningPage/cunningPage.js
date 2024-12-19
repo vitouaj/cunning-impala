@@ -72,4 +72,10 @@ export default class CunningPage extends LightningElement {
       };
     });
   }
+
+  lookupChangeHandler(event) {
+    const { seletedRecordId } = event.detail;
+    console.log("lookupChangeHandler");
+    console.log(JSON.stringify(seletedRecordId));
+  }
 }
