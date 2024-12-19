@@ -1,0 +1,14 @@
+<template>
+  <lightning-record-edit-form
+    class={typeAttributes.class}
+    record-id={typeAttributes.objectRecordId}
+    object-api-name={typeAttributes.objectApiName}
+  >
+    <lightning-input-field
+      variant={typeAttributes.variant}
+      field-name={typeAttributes.fieldApiName}
+      onchange={lookupChange}
+    >
+    </lightning-input-field>
+  </lightning-record-edit-form>
+</template>

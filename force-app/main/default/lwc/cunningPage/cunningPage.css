@@ -1,0 +1,12 @@
+/* cunningPage.css */
+.picture-container {
+  text-align: center; /* Center align the image */
+  padding: 5px;
+}
+
+.custom-picture-style {
+  width: 80px; /* Set a specific width */
+  height: 80px; /* Set a specific height */
+  border-radius: 50%; /* Optional: make the image circular */
+  border: 2px solid #ccc; /* Optional: add a border */
+}
