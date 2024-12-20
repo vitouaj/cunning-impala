@@ -5,11 +5,20 @@ import "./cunningPage.css"; // Import CSS file
 import { loadStyle } from "lightning/platformResourceLoader";
 import cunningStyle from "@salesforce/resourceUrl/cunningPage";
 
+const actions = [{ label: "View", name: "view" }];
 const columns = [
-  { label: "Label", fieldName: "name" },
+  {
+    label: "Label",
+    fieldName: "name",
+    sortable: true,
+    cellAttributes: {
+      class: { fieldName: "slds-text-color_success slds-text-title_caps" }
+    }
+  },
   {
     label: "Photo",
     type: "picture",
+    initialWidth: 220,
     typeAttributes: {
       pictureUrl: { fieldName: "Picture__c" }
     }
@@ -26,12 +35,20 @@ const columns = [
       objectRecordId: { fieldName: "ContactId" },
       class: "lookup-input",
       variant: "label-hidden"
+    },
+    cellAttributes: {
+      alignment: "left",
+      class: { fieldName: "slds-text-color_success slds-text-title_caps" }
     }
   },
   { label: "Website", fieldName: "website", type: "url" },
   { label: "Phone", fieldName: "phone", type: "phone" },
   { label: "Balance", fieldName: "amount", type: "currency" },
-  { label: "CloseAt", fieldName: "closeAt", type: "date" }
+  { label: "CloseAt", fieldName: "closeAt", type: "date" },
+  {
+    type: "action",
+    typeAttributes: { rowActions: actions, menuAlignment: "right" }
+  }
 ];
 
 export default class CunningPage extends LightningElement {
@@ -39,9 +56,32 @@ export default class CunningPage extends LightningElement {
 
   data = [];
 
+  queryTerm = "";
+  debounceTimeout;
+
+  handleKeyUp(evt) {
+    const isEnterKey = evt.keyCode === 13;
+    if (isEnterKey) {
+      this.queryTerm = evt.target.value;
+    }
+  }
+
+  handleSearchChange(event) {
+    const value = event.target.value;
+
+    // Clear previous timeout
+    clearTimeout(this.debounceTimeout);
+
+    // Set a new timeout to delay the update
+    this.debounceTimeout = setTimeout(() => {
+      this.inputValue = value;
+      console.log("Updated value:", this.inputValue);
+      // Perform additional logic here, e.g., server calls
+    }, 700); // Delay of 500ms
+  }
+
   connectedCallback() {
     this.data = this.generateData({ amountOfRecords: 10 });
-
     loadStyle(this, cunningStyle)
       .then(() => console.log("Files loaded."))
       .catch((error) => console.log("Error " + error.body.message));
@@ -77,5 +117,16 @@ export default class CunningPage extends LightningElement {
     const { seletedRecordId } = event.detail;
     console.log("lookupChangeHandler");
     console.log(JSON.stringify(seletedRecordId));
+  }
+
+  handleRowAction(event) {
+    const action = event.detail.action;
+    const row = event.detail.row;
+    switch (action.name) {
+      case "view":
+        alert("Showing Details: " + JSON.stringify(row));
+        break;
+      default:
+    }
   }
 }

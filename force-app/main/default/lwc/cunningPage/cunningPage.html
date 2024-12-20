@@ -1,12 +1,24 @@
 <!-- cunningPage.html -->
 
 <template>
+  <div onkeyup={handleKeyUp}>
+    <lightning-input
+      name="enter-search"
+      class="slds-size_1-of-3 slds-p-bottom_medium"
+      label="Interactive search"
+      type="search"
+      value={queryTerm}
+      onchange={handleSearchChange}
+    ></lightning-input>
+  </div>
+  <p if:true={queryTerm}>Searched for {queryTerm}!</p>
   <c-cunning-data-table
     key-field="id"
     columns={columns}
     data={data}
     onrowselection={getSelectedRows}
     onlookupchange={lookupChangeHandler}
+    onrowaction={handleRowAction}
   >
   </c-cunning-data-table>
 </template>
